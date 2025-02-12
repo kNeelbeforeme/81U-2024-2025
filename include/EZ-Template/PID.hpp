@@ -73,23 +73,23 @@ class PID {
    * Set's constants for exit conditions.
    *
    * \param p_small_exit_time
-   *        sets small_exit_time, timer for to exit within smalL_error
+   *        Sets small_exit_time.  Timer for to exit within smalL_error.
    * \param p_small_error
-   *        sets smalL_error, timer will start when error is within this
+   *        Sets smalL_error. Timer will start when error is within this.
    * \param p_big_exit_time
-   *        sets big_exit_time, timer for to exit within big_error
+   *        Sets big_exit_time.  Timer for to exit within big_error.
    * \param p_big_error
-   *        sets big_error, timer will start when error is within this
+   *        Sets big_error. Timer will start when error is within this.
    * \param p_velocity_exit_time
-   *        sets velocity_exit_time, timer will start when velocity is 0
+   *        Sets velocity_exit_time.  Timer will start when velocity is 0.
    */
   void exit_condition_set(int p_small_exit_time, double p_small_error, int p_big_exit_time = 0, double p_big_error = 0, int p_velocity_exit_time = 0, int p_mA_timeout = 0);
 
   /**
-   * Sets PID target.
+   * Sets target.
    *
    * \param target
-   *        new target for PID
+   *        Target for PID.
    */
   void target_set(double input);
 
@@ -97,19 +97,18 @@ class PID {
    * Computes PID.
    *
    * \param current
-   *        current sensor value
+   *        Current sensor value.
    */
   double compute(double current);
 
   /**
-   * Computes PID, but you compute the error yourself.
-   *
-   * Current is only used here for calculative derivative to solve derivative kick.
+   * Computes PID, but you set the error yourself.  This function ignores target.
+   * Current is only used here for calculative derivative.
    *
    * \param err
-   *        error for the PID, you need to calculate this yourself
+   *        Error in PID, you need to calculate this yourself.
    * \param current
-   *        current sensor value
+   *        Current sensor value.
    */
   double compute_error(double err, double current);
 
@@ -124,22 +123,17 @@ class PID {
   Constants constants_get();
 
   /**
-   * Returns true if PID constants are set, returns false if they're all 0.
-   */
-  bool constants_set_check();
-
-  /**
    * Resets all variables to 0.  This does not reset constants.
    */
   void variables_reset();
 
   /**
-   * Constants.
+   * Constants
    */
   Constants constants;
 
   /**
-   * Exit.
+   * Exit
    */
   exit_condition_ exit;
 
@@ -147,7 +141,7 @@ class PID {
    * Updates a secondary sensor for velocity exiting.  Ideal use is IMU during normal drive motions.
    *
    * \param secondary_sensor
-   *        secondary sensor value
+   *        double for a secondary sensor.
    */
   void velocity_sensor_secondary_set(double secondary_sensor);
 
@@ -160,7 +154,7 @@ class PID {
    * Boolean for if the secondary sensor will be updated or not.  True uses this sensor, false does not.
    *
    * \param toggle
-   *        true uses this sensor, false does not
+   *        True uses this sensor, false does not.
    */
   void velocity_sensor_secondary_toggle_set(bool toggle);
 
@@ -170,7 +164,7 @@ class PID {
   bool velocity_sensor_secondary_toggle_get();
 
   /**
-   * Sets the threshold that the main sensor will return 0 velocity within.
+   * Sets the threshold that the main sensor will return 0 velocity within
    *
    * \param zero
    *        a small double
@@ -178,12 +172,12 @@ class PID {
   void velocity_sensor_main_exit_set(double zero);
 
   /**
-   * Returns the threshold that the main sensor will return 0 velocity within.
+   * Returns the threshold that the main sensor will return 0 velocity within
    */
   double velocity_sensor_main_exit_get();
 
   /**
-   * Sets the threshold that the secondary sensor will return 0 velocity within.
+   * Sets the threshold that the secondary sensor will return 0 velocity within
    *
    * \param zero
    *        a small double
@@ -191,7 +185,7 @@ class PID {
   void velocity_sensor_secondary_exit_set(double zero);
 
   /**
-   * Returns the threshold that the secondary sensor will return 0 velocity within.
+   * Returns the threshold that the secondary sensor will return 0 velocity within
    */
   double velocity_sensor_secondary_exit_get();
 
@@ -199,7 +193,7 @@ class PID {
    * Iterative exit condition for PID.
    *
    * \param print = false
-   *        if true, prints when complete
+   *        if true, prints when complete.
    */
   ez::exit_output exit_condition(bool print = false);
 
@@ -207,9 +201,9 @@ class PID {
    * Iterative exit condition for PID.
    *
    * \param sensor
-   *        a pros motor on your mechanism
+   *        A pros motor on your mechanism.
    * \param print = false
-   *        if true, prints when complete
+   *        if true, prints when complete.
    */
   ez::exit_output exit_condition(pros::Motor sensor, bool print = false);
 
@@ -217,27 +211,17 @@ class PID {
    * Iterative exit condition for PID.
    *
    * \param sensor
-   *        pros motors on your mechanism
+   *        Pros motors on your mechanism.
    * \param print = false
-   *        if true, prints when complete
+   *        if true, prints when complete.
    */
   ez::exit_output exit_condition(std::vector<pros::Motor> sensor, bool print = false);
-
-  /**
-   * Iterative exit condition for PID.
-   *
-   * \param sensor
-   *        pros motor group on your mechanism
-   * \param print = false
-   *        if true, prints when complete
-   */
-  ez::exit_output exit_condition(pros::MotorGroup sensor, bool print = false);
 
   /**
    * Sets the name of the PID that prints during exit conditions.
    *
    * \param name
-   *        the name of the mechanism for printing
+   *        a string that is the name you want to print
    */
   void name_set(std::string name);
 
@@ -247,9 +231,7 @@ class PID {
   std::string name_get();
 
   /**
-   * Enables / disables i resetting when sgn of error changes.
-   *
-   * True resets, false doesn't.
+   * Enables / disables i resetting when sgn of error changes.  True resets, false doesn't.
    *
    * \param toggle
    *        true resets, false doesn't
@@ -257,9 +239,7 @@ class PID {
   void i_reset_toggle(bool toggle);
 
   /**
-   * Returns if i will reset when sgn of error changes.
-   *
-   * True resets, false doesn't.
+   * Returns if i will reset when sgn of error changes.  True resets, false doesn't.
    */
   bool i_reset_get();
 
@@ -284,7 +264,7 @@ class PID {
 
  private:
   double velocity_zero_main = 0.05;
-  double velocity_zero_secondary = 0.075;
+  double velocity_zero_secondary = 0.1;
   int i = 0, j = 0, k = 0, l = 0, m = 0;
   bool is_mA = false;
   double second_sensor = 0.0;
