@@ -5,18 +5,6 @@
 // https://ez-robotics.github.io/EZ-Template/
 /////
 
-// Chassis constructor
-ez::Drive chassis(
-    // These are your drive motors, the first motor is used for sensing!
-    {5, 7},     // Left Chassis Ports (negative port will reverse it!)
-    {-6, -4},  // Right Chassis Ports (negative port will reverse it!)
-
-    7,      // IMU Port
-    1,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
-    100);   // Wheel RPM
-
-pros::Motor claw(-8);
-pros::Motor arm(1);
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -119,7 +107,6 @@ void opcontrol() {
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_COAST;
 
   chassis.drive_brake_set(driver_preference_brake);
-  arm.set_brake_mode(MOTOR_BRAKE_HOLD);
 
   while (true) {
     // PID Tuner
@@ -133,19 +120,13 @@ void opcontrol() {
 
         
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-      claw.move(127);
+      intake.move(127);
     } else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
-      claw.move(-127);
+      intake.move(-127);
     } else {
-      claw.brake();
+      intake.brake();
     }    
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-      arm.move(90);
-    } else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-      arm.move(-90);
-    } else {
-      arm.brake();
-    }
+
     // . . .
     // Put more user control code here!
     // . . .

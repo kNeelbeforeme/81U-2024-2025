@@ -23,8 +23,7 @@ ez::Drive chassis(
 
 using namespace okapi;
 
-auto leftencoder = RotationSensor(8, true);
-auto rightencoder = RotationSensor(5);
+
 // Define the chassis configuration
 /*auto drive = ChassisControllerBuilder()
     .withMotors({-1, -5, -18}, {10, 7, 20}) // Left and right motors
