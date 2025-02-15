@@ -144,13 +144,13 @@ void opcontrol() {
       //  When enabled: 
       //  * use A and Y to increment / decrement the constants
       //  * use the arrow keys to navigate the constants
-      if (master.get_digital_new_press(DIGITAL_UP)) 
+      if (master.get_digital_new_press(DIGITAL_UP)) {
         chassis.pid_tuner_toggle();
-        
+      }
       // Trigger the selected autonomous routine
-      if (master.get_digital_new_press(DIGITAL_DOWN)) 
+      if (master.get_digital_new_press(DIGITAL_DOWN)) {
         autonomous();
-
+      }
       chassis.pid_tuner_iterate(); // Allow PID Tuner to iterate
     } 
 
