@@ -17,26 +17,22 @@ class Piston {
   pros::adi::DigitalOut piston;
 
   /**
-   * Piston constructor.
-   *
-   * The starting position of your piston defaults to false.
+   * Piston constructor.  This class keeps track of piston state.  The starting position of your piston is FALSE.
    *
    * \param input_port
-   *        the ports of your pistons
+   *        The ports of your pistons.
    * \param default_state
-   *        starting state of your piston
+   *        Starting state of your piston.
    */
   Piston(int input_port, bool default_state = false);
 
   /**
-   * Piston constructor in 3 wire expander.
-   *
-   * The starting position of your piston defaults to false.
+   * Piston constructor in 3 wire expander.  The starting position of your piston is FALSE.
    *
    * \param input_ports
-   *        the ports of your pistons
+   *        The ports of your pistons.
    * \param default_state
-   *        starting state of your piston
+   *        Starting state of your piston.
    */
   Piston(int input_port, int expander_smart_port, bool default_state = false);
 
@@ -44,7 +40,7 @@ class Piston {
    * Sets the piston to the input.
    *
    * \param input
-   *        true sets to the opposite of the starting position
+   *        True or false.  True sets to the opposite of the starting position.
    */
   void set(bool input);
 
@@ -57,7 +53,7 @@ class Piston {
    * One button toggle for the piston.
    *
    * \param toggle
-   *        an input button
+   *        An input button.
    */
   void button_toggle(int toggle);
 
@@ -65,9 +61,9 @@ class Piston {
    * Two buttons trigger the piston.  Active is enabled, deactive is disabled.
    *
    * \param active
-   *        sets piston to true
+   *        Sets piston to true.
    * \param active
-   *        sets piston to false
+   *        Sets piston to false.
    */
   void buttons(int active, int deactive);
 
