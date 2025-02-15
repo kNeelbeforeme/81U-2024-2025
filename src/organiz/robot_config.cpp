@@ -25,7 +25,7 @@ ez::Drive chassis(
 ); 
 
 
-using namespace okapi;
+// using namespace okapi;
 
 
 // Define the chassis configuration
@@ -36,10 +36,11 @@ using namespace okapi;
     .withSensors(leftencoder, rightencoder)
     .buildOdometry(); 
 */
-pros::v5::Motor intake(6);
-pros::v5::Motor intake2(7);
 
-
+okapi::Motor intake1(6);
+okapi::Motor intake2(7);
+// pros::v5::MotorGroup intake(6, pros::E_MOTOR_GEAR_200);
+okapi::MotorGroup intake({intake1, intake2});
 ez::Piston intakePiston(5); //true is down
 ez::Piston backClamp(6); // true is down
 ez::Piston doinkerRight(5); // true is down
