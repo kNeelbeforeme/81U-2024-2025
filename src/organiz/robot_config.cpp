@@ -51,7 +51,7 @@ ez::Piston doinkerLeft(4);
 /*
 
 */
-pros::Motor ladybrown(-14);
+pros::Motor ladybrown(14);
 
 /*
 ladybrown is geared 6:36, so all angle degrees from sensor should be x6

@@ -14,18 +14,13 @@
 void initialize() {
   
 	pros::lcd::initialize();
+  chassis.initialize();
+
   ladyBrownSensor.reset();
   ladyBrownSensor.set_reversed(true);
   ladyBrownSensor.reset_position();
 	// pros::lcd::register_btn1_cb([]{sunaiControls != sunaiControls});
-  pros::Task lb_control_task([]{
-    while (true)
-    {
-      lb_liftControl();
-      pros::delay(ez::util::DELAY_TIME);
-    }
-    
-  });
+
 
   // Print our branding over your terminal :D
   ez::ez_template_print();
@@ -58,12 +53,20 @@ void initialize() {
       Auton("Interference\n\nAfter driving forward, robot performs differently if interfered or not.", interfered_example),
     Auton("DO NOTHING \n THIS CODE STAYS STILL AND DOES NOTHING", do_nothing)
 
+    
   });
 
+  pros::Task lb_control_task([]{
+    while (true)
+    {
+      lb_liftControl();
+      pros::delay(ez::util::DELAY_TIME);
+    }
+    
+  });
   // Initialize chassis and auton selector
 
 
-  chassis.initialize();
   ez::as::initialize();
   master.rumble(".");
 }

@@ -47,8 +47,8 @@ void lb_setState(int setState) {
 }
 
 void lb_liftControl() {
-    double kP = 0.1;
-    double currentPos = - (ladyBrownSensor.get_position() / 100.00);
+    double kP = 0.7;
+    double currentPos = (ladyBrownSensor.get_position() / 100.00);
     double error = target - currentPos;
     double velocity = kP * error;
 
@@ -56,6 +56,8 @@ void lb_liftControl() {
         velocity = 127;
     } else if (velocity < -127) {
         velocity = -127;
+    } else if (abs(velocity) < 1) {
+        velocity = 0;
     }
 
     ladybrown.move(velocity);
