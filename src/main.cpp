@@ -123,7 +123,7 @@ void opcontrol() {
   // This is preference to what you like to drive on
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_COAST;
   chassis.drive_brake_set(driver_preference_brake);
-  bool sunaiControls = false;
+  bool sunaiControls = true;
 
   while (true) {
     pros::lcd::print(4, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
@@ -137,7 +137,7 @@ void opcontrol() {
       //  When enabled: 
       //  * use A and Y to increment / decrement the constants
       //  * use the arrow keys to navigate the constants
-      if (master.get_digital_new_press(DIGITAL_X)) 
+      if (master.get_digital_new_press(DIGITAL_UP)) 
         chassis.pid_tuner_toggle();
         
       // Trigger the selected autonomous routine
@@ -147,10 +147,17 @@ void opcontrol() {
       chassis.pid_tuner_iterate(); // Allow PID Tuner to iterate
     } 
 
-    doinker.button_toggle(master.get_digital_new_press(DIGITAL_A));
-    // backClamp.button_toggle(master.get_digital_new_press(DIGITAL_L2));
-    intakePiston.button_toggle(master.get_digital_new_press(DIGITAL_LEFT));
+    doinkerLeft.button_toggle(master.get_digital_new_press(DIGITAL_X));
+    doinkerRight.button_toggle(master.get_digital_new_press(DIGITAL_B));
+    intakePiston.button_toggle(master.get_digital_new_press(DIGITAL_Y));
+    if (master.get_digital_new_press(DIGITAL_A)) {
+      lb_nextState();
+    }
 
+    if (master.get_digital_new_press(DIGITAL_LEFT)) {
+      //sets lb to tipping position
+      lb_setState(4);
+    }
 
     if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
       if (sunaiControls) {
@@ -187,9 +194,7 @@ void opcontrol() {
       backClamp.set(false);
     }
 
-    if (master.get_digital_new_press(DIGITAL_UP)) {
-      lb_nextState();
-    }
+
 
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME

@@ -8,7 +8,8 @@ extern ez::Piston backClamp;
 extern ez::Piston intakePiston;
 // extern pros::ADIDigitalOut doinker;
 extern pros::Motor ladybrown;
-extern ez::Piston doinker;
+extern ez::Piston doinkerLeft;
+extern ez::Piston doinkerRight; // true is down
 extern pros::IMU inertial;
 extern pros::Rotation ladyBrownSensor;
 extern pros::Optical color_checker;

@@ -3,13 +3,16 @@
 
 
 // Drivetrain constructor
+
+pros::IMU inertial(5);
+
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing! 
     //BACK TO FRONT
-    {-11, -16, -13},     // Left Chassis Ports (negative port will reverse it!)
-    {12, 17, 14},  // Right Chassis Ports (negative port will reverse it!)
+    {-10, -9, -8},     // Left Chassis Ports (negative port will reverse it!)
+    {1, 2, 3},  // Right Chassis Ports (negative port will reverse it!
 
-    18,      // IMU Port
+    inertial.get_port(),      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
 
     // External Gear Ratio (MUST BE DECIMAL) This is WHEEL GEAR / SENSOR GEAR
@@ -19,7 +22,8 @@ ez::Drive chassis(
 
     -16,  // Left Rotation Port (negative port will reverse it!)
     17 // Right Rotation Port (negative port will reverse it!)
-);  
+); 
+
 
 using namespace okapi;
 
@@ -32,13 +36,24 @@ using namespace okapi;
     .withSensors(leftencoder, rightencoder)
     .buildOdometry(); 
 */
-pros::Motor intake(15);
+pros::v5::Motor intake1(6);
+pros::v5::Motor intake2(7);
+
 ez::Piston backClamp(2); // true is down
-ez::Piston doinker(8); // true is down
+ez::Piston doinkerRight(8); // true is down
+ez::Piston doinkerLeft(7); // true is down
 ez::Piston intakePiston(5); //true is down
-pros::IMU inertial(18);
+
+
+/*
+ladybrown is geared 6:36, so all angle degrees from sensor should be x6
+*/
 pros::Motor ladybrown(2);
-pros::Rotation ladyBrownSensor(1);
-pros::Optical color_checker(3);
+
+/*
+ladybrown is geared 6:36, so all angle degrees from sensor should be x6
+*/
+pros::Rotation ladyBrownSensor(14);
+// pros::Optical color_checker(3);
 
 pros::Controller master (CONTROLLER_MASTER);
