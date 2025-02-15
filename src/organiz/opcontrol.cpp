@@ -16,16 +16,22 @@ void intake_func() {
 
 
 const int numStates = 5;
-int states[numStates] = {0, 180, 540, 600, 660};
+int states[numStates] = {0, 50, 360, 390, 450};
 int currState = 0;
 int target = 0;
 
 void lb_nextState() {
+    std::cout << "current state :" << currState << "\n";
+    std::cout << "target angle:" << target << "\n";
+    std::cout << "Current angle from lb sensor: " << ladyBrownSensor.get_angle() << "\n";
+    // std::cout << "Current position from lb sensor: " << ladyBrownSensor.get_position() << "\n";
+
     currState += 1;
     if (currState >= 3) {
         currState = 0;
     }
     target = states[currState];
+    std::cout << "current target :" << target << "\n";
 }
 
 
@@ -41,10 +47,25 @@ void lb_setState(int setState) {
 }
 
 void lb_liftControl() {
-    double kP = 0.6;
-    double error = target - ladyBrownSensor.get_position();
+    double kP = 0.7;
+    double currentPos = (ladyBrownSensor.get_position() / 100.00);
+    double error = target - currentPos;
     double velocity = kP * error;
 
+    if (velocity > 127) {
+        velocity = 127;
+    } else if (velocity < -127) {
+        velocity = -127;
+    } else if (abs(velocity) < 1) {
+        velocity = 0;
+    }
+
     ladybrown.move(velocity);
+    std::cout << "Current position /100: " << currentPos << "\n";
+    // std::cout << "Current position from lb sensor: " << ladyBrownSensor.get_position() << "\n";
+    std::cout << "Current error: " << error << "\n";
+    std::cout << "Current velocity: " << velocity << "\n";
+
+    pros::delay(1000);
 
 }

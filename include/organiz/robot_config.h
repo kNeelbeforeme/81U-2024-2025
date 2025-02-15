@@ -3,10 +3,11 @@
 
 extern ez::Drive chassis;
 extern pros::Controller master;
-extern pros::Motor intake;
+extern pros::MotorGroup intake;
 extern ez::Piston backClamp;
 extern ez::Piston intakePiston;
 // extern pros::ADIDigitalOut doinker;
+
 extern pros::Motor ladybrown;
 extern ez::Piston doinkerLeft;
 extern ez::Piston doinkerRight; // true is down
