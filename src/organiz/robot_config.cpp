@@ -40,9 +40,9 @@ using namespace okapi;
 pros::v5::Motor intake(6);
 pros::v5::Motor intake2(7);
 
-ez::Piston backClamp(2); // true is down
-ez::Piston doinkerRight(8); // true is down
-ez::Piston doinkerLeft(7); // true is down
+ez::Piston backClamp(6); // true is down
+ez::Piston doinkerRight(5); // true is down
+ez::Piston doinkerLeft(4); // true is down
 ez::Piston intakePiston(5); //true is down
 
 
