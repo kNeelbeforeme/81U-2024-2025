@@ -36,8 +36,9 @@ using namespace okapi;
     .withSensors(leftencoder, rightencoder)
     .buildOdometry(); 
 */
-pros::v5::Motor intake1(6);
+pros::v5::Motor intake(6);
 pros::v5::Motor intake2(7);
+
 
 ez::Piston backClamp(2); // true is down
 ez::Piston doinkerRight(8); // true is down
