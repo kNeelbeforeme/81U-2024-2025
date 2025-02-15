@@ -20,8 +20,8 @@ ez::Drive chassis(
     // eg. if your drive is 36:60 where the 60t is sensored, your RATIO would be 36/60 which is 0.6
     1.66,
 
-    -16,  // Left Rotation Port (negative port will reverse it!)
-    17 // Right Rotation Port (negative port will reverse it!)
+    -9,  // Left Rotation Port (negative port will reverse it!)
+    2 // Right Rotation Port (negative port will reverse it!)
 ); 
 
 
@@ -36,26 +36,28 @@ ez::Drive chassis(
     .withSensors(leftencoder, rightencoder)
     .buildOdometry(); 
 */
-
-okapi::Motor intake1(6);
-okapi::Motor intake2(7);
-// pros::v5::MotorGroup intake(6, pros::E_MOTOR_GEAR_200);
-okapi::MotorGroup intake({intake1, intake2});
-ez::Piston intakePiston(5); //true is down
+using namespace pros;
+// okapi::Motor intake1(6);
+// okapi::Motor intake2(7);
+pros::v5::MotorGroup intake({6, 7});
+// okapi::MotorGroup intake({intake1, intake2});
+ez::Piston intakePiston(0); //true is down
 ez::Piston backClamp(6); // true is down
 ez::Piston doinkerRight(5); // true is down
 ez::Piston doinkerLeft(4);
 
 
+
 /*
-ladybrown is geared 6:36, so all angle degrees from sensor should be x6
+
 */
-pros::Motor ladybrown(2);
+pros::Motor ladybrown(-14);
 
 /*
 ladybrown is geared 6:36, so all angle degrees from sensor should be x6
+sensor is reversed in init
 */
-pros::Rotation ladyBrownSensor(14);
+pros::Rotation ladyBrownSensor(20);
 // pros::Optical color_checker(3);
 
 pros::Controller master (CONTROLLER_MASTER);

@@ -14,6 +14,9 @@
 void initialize() {
   
 	pros::lcd::initialize();
+  ladyBrownSensor.reset();
+  ladyBrownSensor.set_reversed(true);
+  ladyBrownSensor.reset_position();
 	// pros::lcd::register_btn1_cb([]{sunaiControls != sunaiControls});
   pros::Task lb_control_task([]{
     while (true)
@@ -58,7 +61,8 @@ void initialize() {
   });
 
   // Initialize chassis and auton selector
-  ladyBrownSensor.reset();
+
+
   chassis.initialize();
   ez::as::initialize();
   master.rumble(".");
