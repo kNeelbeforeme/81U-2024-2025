@@ -12,9 +12,9 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-  
 	pros::lcd::initialize();
   chassis.initialize();
+  master.rumble(".");
 
   ladyBrownSensor.reset();
   ladyBrownSensor.set_reversed(true);
@@ -38,11 +38,12 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-    Auton("BLUE RING SIDE CODE", blue_ring_rush),
-    Auton("BLUE GOAL SIDE CODE", blue_goal_rush),
+    Auton("RIGHT SIDE CODE", blue_ring_rush),
+    Auton("LEFT SIDE CODE", blue_goal_rush),
+    Auton("SKILLS CODE", skills_code),
+
     Auton("RED RING SIDE CODE", red_ring_rush),
     Auton("RED GOAL SIDE CODE", red_goal_rush),
-    Auton("SKILLS CODE", skills_code),
       Auton("drive example", drive_example),
       Auton("Example Turn\n\nTurn 3 times.", turn_example),
       Auton("Drive and Turn\n\nDrive forward, turn, come back. ", drive_and_turn),
@@ -66,9 +67,9 @@ void initialize() {
   });
   // Initialize chassis and auton selector
 
-
+  ladybrown.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   ez::as::initialize();
-  master.rumble(".");
+  master.rumble("...");
 }
 
 /**
@@ -156,12 +157,12 @@ void opcontrol() {
 
     doinkerLeft.button_toggle(master.get_digital_new_press(DIGITAL_X));
     doinkerRight.button_toggle(master.get_digital_new_press(DIGITAL_B));
-    intakePiston.button_toggle(master.get_digital_new_press(DIGITAL_Y));
+    // intakePiston.button_toggle(master.get_digital_new_press(DIGITAL_Y));
     if (master.get_digital_new_press(DIGITAL_A)) {
       lb_nextState();
     }
 
-    if (master.get_digital_new_press(DIGITAL_LEFT)) {
+    if (master.get_digital_new_press(DIGITAL_Y)) {
       //sets lb to tipping position
       lb_setState(4);
     }

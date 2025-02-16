@@ -16,7 +16,7 @@ void intake_func() {
 
 
 const int numStates = 5;
-int states[numStates] = {0, 50, 360, 390, 450};
+int states[numStates] = {0, 25, 145, 170, 220};
 int currState = 0;
 int target = 0;
 
@@ -47,20 +47,34 @@ void lb_setState(int setState) {
 }
 
 void lb_liftControl() {
-    double kP = 0.7;
+    double kP = 0.5;
     double currentPos = (ladyBrownSensor.get_position() / 100.00);
     double error = target - currentPos;
     double velocity = kP * error;
+
+
+
+    if ((currentPos > 225) || (currentPos < 0)) {
+        velocity = 0;
+    }
+    if ((error < 2) && (error > -2)) {
+        velocity = 0;
+    }
+    if (error < -360) {
+        velocity = 0;
+    }
 
     if (velocity > 127) {
         velocity = 127;
     } else if (velocity < -127) {
         velocity = -127;
-    } else if (abs(velocity) < 1) {
+    } else if (abs(velocity) < 2) {
         velocity = 0;
     }
 
     ladybrown.move(velocity);
+
+
     std::cout << "Current position /100: " << currentPos << "\n";
     // std::cout << "Current position from lb sensor: " << ladyBrownSensor.get_position() << "\n";
     std::cout << "Current error: " << error << "\n";
