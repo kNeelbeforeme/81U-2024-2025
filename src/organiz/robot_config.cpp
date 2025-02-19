@@ -1,16 +1,30 @@
 #include "organiz/organize.h"
 #include "main.h"
 
+using namespace pros;
+pros::v5::Motor intake(10);
+// pros::v5::MotorGroup intake({6, 7});
+ez::Piston intakePiston(0); //true is down
+ez::Piston backClamp(6); // true is down
+ez::Piston doinkerRight(5); // true is down
+ez::Piston doinkerLeft(4);
 
+
+pros::Motor ladybrown(14);
+
+Rotation ladyBrownSensor(9);
+// pros::Optical color_checker(3);
+
+Controller master (CONTROLLER_MASTER);
 // Drivetrain constructor
 
-pros::IMU inertial(5);
+IMU inertial(16);
 
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing! 
     //BACK TO FRONT
-    {-10, -9, -8},     // Left Chassis Ports (negative port will reverse it!)
-    {1, 2, 3},  // Right Chassis Ports (negative port will reverse it!
+    {-18, -19, -20},     // Left Chassis Ports (negative port will reverse it!)
+    {13, 12, 11},  // Right Chassis Ports (negative port will reverse it!
 
     inertial.get_port(),      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -36,18 +50,3 @@ ez::Drive chassis(
     .withSensors(leftencoder, rightencoder)
     .buildOdometry(); 
 */
-using namespace pros;
-pros::v5::Motor intake(6);
-// pros::v5::MotorGroup intake({6, 7});
-ez::Piston intakePiston(0); //true is down
-ez::Piston backClamp(6); // true is down
-ez::Piston doinkerRight(5); // true is down
-ez::Piston doinkerLeft(4);
-
-
-pros::Motor ladybrown(14);
-
-pros::Rotation ladyBrownSensor(9);
-// pros::Optical color_checker(3);
-
-pros::Controller master (CONTROLLER_MASTER);
