@@ -37,27 +37,17 @@ ez::Drive chassis(
     .buildOdometry(); 
 */
 using namespace pros;
-// okapi::Motor intake1(6);
-// okapi::Motor intake2(7);
-pros::v5::MotorGroup intake({6, 7});
-// okapi::MotorGroup intake({intake1, intake2});
+pros::v5::Motor intake(6);
+// pros::v5::MotorGroup intake({6, 7});
 ez::Piston intakePiston(0); //true is down
 ez::Piston backClamp(6); // true is down
 ez::Piston doinkerRight(5); // true is down
 ez::Piston doinkerLeft(4);
 
 
-
-/*
-
-*/
 pros::Motor ladybrown(14);
 
-/*
-ladybrown is geared 6:36, so all angle degrees from sensor should be x6
-sensor is reversed in init
-*/
-pros::Rotation ladyBrownSensor(20);
+pros::Rotation ladyBrownSensor(9);
 // pros::Optical color_checker(3);
 
 pros::Controller master (CONTROLLER_MASTER);

@@ -57,17 +57,14 @@ void blue_ring_rush() {
 
   chassis.pid_drive_set(10, DRIVE_SPEED);
   chassis.pid_wait_quick();
-  chassis.pid_drive_set(10, DRIVE_SPEED);
+  chassis.pid_drive_set(15, DRIVE_SPEED);
   chassis.pid_wait();
 
   chassis.pid_drive_set(0, 0);
-  pros::delay(7000);
+  pros::delay(5000);
   intake.brake();
 
-  chassis.pid_turn_set(0, TURN_SPEED);
-  chassis.pid_wait();
-
-  chassis.pid_drive_set(-20, DRIVE_SPEED);
+  chassis.pid_drive_set(-25, DRIVE_SPEED);
   chassis.pid_wait();
 
   chassis.pid_drive_set(0, 0);
@@ -177,18 +174,14 @@ void blue_goal_rush() {
 
   chassis.pid_drive_set(10, DRIVE_SPEED);
   chassis.pid_wait_quick();
-  chassis.pid_drive_set(10, DRIVE_SPEED);
+  chassis.pid_drive_set(15, DRIVE_SPEED);
   chassis.pid_wait();
 
   chassis.pid_drive_set(0, 0);
-  pros::delay(7000);
+  pros::delay(5000);
   intake.brake();
 
-
-  chassis.pid_turn_set(0, TURN_SPEED);
-  chassis.pid_wait();
-
-  chassis.pid_drive_set(-20, DRIVE_SPEED);
+  chassis.pid_drive_set(-25, DRIVE_SPEED);
   chassis.pid_wait();
 
   chassis.pid_drive_set(0, 0);

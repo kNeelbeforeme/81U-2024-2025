@@ -17,7 +17,7 @@ void initialize() {
   master.rumble(".");
 
   ladyBrownSensor.reset();
-  ladyBrownSensor.set_reversed(true);
+  // ladyBrownSensor.set_reversed(true);
   ladyBrownSensor.reset_position();
 	// pros::lcd::register_btn1_cb([]{sunaiControls != sunaiControls});
 
@@ -57,14 +57,6 @@ void initialize() {
     
   });
 
-  pros::Task lb_control_task([]{
-    while (true)
-    {
-      lb_liftControl();
-      pros::delay(ez::util::DELAY_TIME);
-    }
-    
-  });
   // Initialize chassis and auton selector
 
   ladybrown.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -79,6 +71,7 @@ void initialize() {
  */
 void disabled() {
   // . . .
+
 }
 
 /**
@@ -131,7 +124,8 @@ void opcontrol() {
   // This is preference to what you like to drive on
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_COAST;
   chassis.drive_brake_set(driver_preference_brake);
-  bool sunaiControls = true;
+  bool sunaiControls = false;
+  pros::Task lb_control_task(lb_task_func);
 
   while (true) {
     pros::lcd::print(4, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
@@ -167,13 +161,13 @@ void opcontrol() {
       lb_setState(4);
     }
 
-    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
-      if (sunaiControls) {
-        sunaiControls = false;
-      } else {
-        sunaiControls = true;
-      }
-    }
+    // if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
+    //   if (sunaiControls) {
+    //     sunaiControls = false;
+    //   } else {
+    //     sunaiControls = true;
+    //   }
+    // }
 
     if (sunaiControls) {
       chassis.opcontrol_arcade_standard(ez::SINGLE); // Standard single arcade
