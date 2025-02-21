@@ -2,17 +2,17 @@
 #include "main.h"
 
 using namespace pros;
-pros::v5::Motor intake(10);
+pros::v5::Motor intake(-10);
 // pros::v5::MotorGroup intake({6, 7});
 ez::Piston intakePiston(0); //true is down
-ez::Piston backClamp(6); // true is down
-ez::Piston doinkerRight(5); // true is down
-ez::Piston doinkerLeft(4);
+ez::Piston backClamp('c'); // true is down
+ez::Piston doinkerRight('a'); // true is down
+ez::Piston doinkerLeft('e'); // true is down
 
 
-pros::Motor ladybrown(14);
+pros::v5::Motor ladybrown(3, pros::v5::MotorGears::red, pros::v5::MotorEncoderUnits::degrees);
 
-Rotation ladyBrownSensor(9);
+Rotation ladyBrownSensor(-9);
 // pros::Optical color_checker(3);
 
 Controller master (CONTROLLER_MASTER);

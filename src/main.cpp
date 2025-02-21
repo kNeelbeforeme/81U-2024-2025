@@ -127,6 +127,12 @@ void opcontrol() {
   bool sunaiControls = false;
   pros::Task lb_control_task(lb_task_func);
 
+  pros::Task print_stuff([]{while (true) {
+  
+    lb_test_print();
+    pros::delay(1000);
+}}, "PRINT STUFF AS TEST");
+
   while (true) {
     pros::lcd::print(4, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
     (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,

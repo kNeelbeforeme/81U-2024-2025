@@ -6,6 +6,7 @@ void lb_nextState();
 void lb_liftControl();
 void lb_setState(int setState);
 void lb_task_func();
+void lb_test_print();
 
 // extern ez::PID lbPID;
 
