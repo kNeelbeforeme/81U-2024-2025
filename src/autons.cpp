@@ -41,8 +41,62 @@ void do_nothing() {
 
 //first auton sketfch out
 void blue_ring_rush() {
-  
+  chassis.drive_angle_set(225);
 
+  chassis.pid_drive_set(6, DRIVE_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(0,0);
+  lb_setState(3);
+  pros::delay(1000);
+  lb_setState(0);
+
+  chassis.pid_drive_set(-10, DRIVE_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(180, TURN_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-10, DRIVE_SPEED);
+  chassis.pid_wait();
+  
+  chassis.pid_drive_set(-5, DRIVE_SPEED);
+  chassis.pid_wait();
+  backClamp.set(true);
+
+  chassis.pid_turn_set(90, TURN_SPEED);
+  chassis.pid_wait();
+  intake.move(127);
+
+  chassis.pid_drive_set(15, DRIVE_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-15, DRIVE_SPEED);
+  chassis.pid_wait_quick();
+
+  chassis.pid_turn_set(0, TURN_SPEED);
+  chassis.pid_wait_quick();
+  
+  chassis.pid_drive_set(10, DRIVE_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-10, DRIVE_SPEED);
+  chassis.pid_wait_quick();
+
+  chassis.pid_turn_set(30, TURN_SPEED);
+  chassis.pid_wait_quick();
+  
+  chassis.pid_drive_set(12, DRIVE_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-12, DRIVE_SPEED);
+  chassis.pid_wait_quick();
+
+  chassis.pid_turn_set(-90, TURN_SPEED);
+  chassis.pid_wait_quick();
+  
+  chassis.pid_drive_set(40, DRIVE_SPEED);
+  chassis.pid_wait();
 
 //--------------
   // chassis.pid_drive_set(-36_in, 100, true);
@@ -73,38 +127,37 @@ void blue_ring_rush() {
 
 //second auton sketfch out
 void blue_goal_rush() {
-  chassis.drive_angle_set(-30);
-  doinkerRight.set(true);
+  chassis.drive_angle_set(180);
 
-  chassis.pid_drive_set(190, DRIVE_SPEED, true);
-  chassis.pid_wait();
-  
-  chassis.pid_turn_set(-10, TURN_SPEED);
-  chassis.pid_wait();
-  doinkerRight.set(false);
-
-  chassis.pid_drive_set(-10, DRIVE_SPEED, true);
+  chassis.pid_drive_set(-25, DRIVE_SPEED);
   chassis.pid_wait();
 
-  chassis.pid_turn_set(-180, TURN_SPEED);
-  doinkerRight.set(true);
+  chassis.pid_turn_set(225, TURN_SPEED);
   chassis.pid_wait();
 
-  chassis.pid_turn_set(-90, TURN_SPEED);
-  doinkerRight.set(false);
-  chassis.pid_wait();
-
-  chassis.pid_drive_set(-10, DRIVE_SPEED);
+  chassis.pid_drive_set(-8, DRIVE_SPEED);
   chassis.pid_wait();
 
   backClamp.set(true);
-  intake.move(100);
 
-  chassis.pid_drive_set(0,0);
+  chassis.pid_turn_set(180, TURN_SPEED);
   chassis.pid_wait();
 
-  pros::delay(2000);
+  intake.move(127);
+
+  chassis.pid_drive_set(15, DRIVE_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(90, TURN_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(20, DRIVE_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_swing_set(ez::RIGHT_SWING, 45, SWING_SPEED);
+  chassis.pid_wait();
   intake.brake();
+  
 
   //---------------
   // chassis.drive_angle_set(-90);
@@ -290,8 +343,8 @@ void red_goal_rush() {
 
 void skills_red_left_side() {
 
-  intake.move(100);
-  pros::delay(500);
+  intake.move(127);
+  pros::delay(700);
 
   chassis.pid_drive_set(12, DRIVE_SPEED);
   chassis.pid_wait();
@@ -301,21 +354,21 @@ void skills_red_left_side() {
 
   intake.brake();
 
-  chassis.pid_drive_set(-18, DRIVE_SPEED);
+  chassis.pid_drive_set(-20, DRIVE_SPEED);
   chassis.pid_wait();
 
   backClamp.set(true);
 
   chassis.pid_turn_set(0, TURN_SPEED);
-  chassis.pid_wait();
+  chassis.pid_wait_quick();
 
   intake.move(120);
 
   chassis.pid_drive_set(14, DRIVE_SPEED);
   chassis.pid_wait_quick();
 
-  chassis.pid_swing_set(ez::RIGHT_SWING, -68, SWING_SPEED);
-  chassis.pid_wait_quick_chain();
+  chassis.pid_swing_set(ez::RIGHT_SWING, -68, TURN_SPEED);
+  chassis.pid_wait_quick();
 
   chassis.pid_drive_set(16, DRIVE_SPEED);
   chassis.pid_wait_quick();
@@ -323,7 +376,7 @@ void skills_red_left_side() {
   chassis.pid_swing_set(ez::RIGHT_SWING, -90, SWING_SPEED);
   chassis.pid_wait_quick();
   
-  chassis.pid_drive_set(-6, DRIVE_SPEED);
+  chassis.pid_drive_set(-10, DRIVE_SPEED);
   chassis.pid_wait();
 
   chassis.pid_turn_set(-180, SWING_SPEED);
@@ -335,10 +388,13 @@ void skills_red_left_side() {
   //   chassis.pid_wait_quick();
   // }
   chassis.pid_drive_set(15, DRIVE_SPEED);
-  chassis.pid_wait_quick_chain();
-  chassis.pid_drive_set(15, DRIVE_SPEED);
-  chassis.pid_wait_quick_chain();
-  chassis.pid_drive_set(20, DRIVE_SPEED);
+  chassis.pid_wait();
+  pros::delay(500);
+  chassis.pid_drive_set(10, DRIVE_SPEED);
+  chassis.pid_wait_quick();
+  chassis.pid_drive_set(5, DRIVE_SPEED);
+  chassis.pid_wait_quick();
+  chassis.pid_drive_set(13, DRIVE_SPEED);
   chassis.pid_wait_quick_chain();
 
 
@@ -350,6 +406,7 @@ void skills_red_left_side() {
   chassis.pid_drive_set(-5, DRIVE_SPEED);
   chassis.pid_wait_quick();
 
+
   chassis.pid_turn_set(-315, SWING_SPEED);
   chassis.pid_wait();
 
@@ -357,6 +414,7 @@ void skills_red_left_side() {
   chassis.pid_wait();
 
   backClamp.set(false);
+  intake.move(-100);
 
   chassis.pid_drive_set(5, DRIVE_SPEED);
   chassis.pid_wait_quick();
@@ -376,13 +434,13 @@ void skills_red_right_side() {
 
   intake.move(-120);
 
-  chassis.pid_drive_set(-12, DRIVE_SPEED);
+  chassis.pid_drive_set(-14, DRIVE_SPEED);
   chassis.pid_wait_quick_chain();
 
   backClamp.set(true);
   intake.brake();
 
-  chassis.pid_drive_set(8, DRIVE_SPEED);
+  chassis.pid_drive_set(10, DRIVE_SPEED);
   chassis.pid_wait();
 
   chassis.pid_turn_set(0, TURN_SPEED);
@@ -393,16 +451,19 @@ void skills_red_right_side() {
   chassis.pid_drive_set(10, DRIVE_SPEED);
   chassis.pid_wait_quick();
 
-  chassis.pid_swing_set(ez::LEFT_SWING, 66, SWING_SPEED);
+  chassis.pid_swing_set(ez::LEFT_SWING, 60, SWING_SPEED);
   chassis.pid_wait_quick_chain();
 
-  chassis.pid_drive_set(17, DRIVE_SPEED);
+  chassis.pid_drive_set(20, DRIVE_SPEED);
   chassis.pid_wait_quick();
 
   chassis.pid_swing_set(ez::LEFT_SWING, 90, SWING_SPEED);
   chassis.pid_wait_quick();
+
+  chassis.pid_drive_set(8, DRIVE_SPEED);
+  chassis.pid_wait_quick();
   
-  chassis.pid_drive_set(-5, DRIVE_SPEED);
+  chassis.pid_drive_set(-8, DRIVE_SPEED);
   chassis.pid_wait_quick();
 
   chassis.pid_turn_set(180, SWING_SPEED);
@@ -413,11 +474,14 @@ void skills_red_right_side() {
   //   chassis.pid_drive_set(15, DRIVE_SPEED);
   //   chassis.pid_wait_quick();
   // }
-  chassis.pid_drive_set(15, DRIVE_SPEED);
-  chassis.pid_wait_quick_chain();
-  chassis.pid_drive_set(15, DRIVE_SPEED);
-  chassis.pid_wait_quick_chain();
-  chassis.pid_drive_set(20, DRIVE_SPEED);
+  chassis.pid_drive_set(16, DRIVE_SPEED);
+  chassis.pid_wait();
+  pros::delay(500);
+  chassis.pid_drive_set(11, DRIVE_SPEED);
+  chassis.pid_wait_quick();
+  chassis.pid_drive_set(6, DRIVE_SPEED);
+  chassis.pid_wait_quick();
+  chassis.pid_drive_set(10, DRIVE_SPEED);
   chassis.pid_wait_quick_chain();
 
 
@@ -453,10 +517,8 @@ void skills_blue_side() {
   chassis.pid_turn_set(270, TURN_SPEED);
   chassis.pid_wait();
 
-  chassis.pid_drive_set(-40, DRIVE_SPEED);
-  chassis.pid_wait_quick_chain();
   chassis.pid_drive_set(-30, DRIVE_SPEED);
-  chassis.pid_wait();
+  chassis.pid_wait_quick_chain();
 
   backClamp.set(false);
 
@@ -475,9 +537,9 @@ void skills_blue_side() {
   chassis.pid_turn_set(90, TURN_SPEED);
   chassis.pid_wait_quick_chain();
 
-  chassis.pid_drive_set(-30, DRIVE_SPEED);
+  chassis.pid_drive_set(-20, DRIVE_SPEED);
   chassis.pid_wait_quick_chain();
-  chassis.pid_drive_set(-40, DRIVE_SPEED);
+  chassis.pid_drive_set(-30, DRIVE_SPEED);
   chassis.pid_wait_quick_chain();  
   chassis.pid_wait();
 
@@ -487,7 +549,7 @@ void skills_blue_side() {
   chassis.pid_drive_set(-10, DRIVE_SPEED);
   chassis.pid_wait_quick_chain();
 
-  chassis.pid_swing_set(ez::RIGHT_SWING, 90, SWING_SPEED, 100);
+  chassis.pid_swing_set(ez::RIGHT_SWING, 90, SWING_SPEED);
   chassis.pid_wait_quick();
 
 }
@@ -504,20 +566,6 @@ void skills_code() {
   chassis.pid_wait();
 
   skills_blue_side();
-
-  //old code
-  // chassis.pid_drive_set(-5_in, DRIVE_SPEED);
-  // chassis.pid_wait();
-
-  // backClamp.set(true);
-
-  // chassis.pid_turn_set(-90_deg, TURN_SPEED);
-  // chassis.pid_wait();
-
-  // intake.move(127);
-
-  // chassis.pid_drive_set(10_in, DRIVE_SPEED);
-  // chassis.pid_wait();
 }
 ///
 // Drive Example

@@ -15,8 +15,8 @@ void intake_func() {
 }
 
 
-const int numStates = 5;
-int states[numStates] = {0, 29, 145, 170, 220};
+const int numStates = 4;
+int states[numStates] = {0, 29, 130, 190};
 int currState = 0;
 int target = 0;
 
@@ -24,27 +24,20 @@ int target = 0;
 
 const int MAX_LB_SPEED = 127;
 const int NEG_MAX_LB_SPEED = -127;
-double lb_kP = 0;
+double lb_kP = 2.5;
 
 
 void lb_liftControl() {
     // lbPID.target_set(target);
     if ((target <= 50)) {
-        lb_kP = 5;
+        lb_kP = 4;
     } else {
         lb_kP = 2.5;
     }
     double currentPos = -1 * (ladyBrownSensor.get_position() / 100.00);
     double error = target - currentPos;
     double velocity = lb_kP * error;
-    // double velocity = lbPID.compute(currentPos);
-
-    // if ((currentPos > 330) && (target != 0)) {
-    //     velocity = -10;
-    // } 
-
-
-    
+    // double velocity = lbPID.compute(currentPos);    
    
     // if ((error < 2) && (error > -2)) {
     //     velocity = 0;
@@ -94,11 +87,14 @@ void lb_nextState() {
 /** 0 is idle, 
  * 1 is loading
  * 2 is aligning w stake
- * 3 is to push ring down
- * 4 is tipping position
+ * 3 is tipping position
  **/
-void lb_setState(int setState) {
-    currState = setState;
+void lb_setState(int targetState) {
+    if (targetState >= numStates) {
+        currState = (numStates-1);
+    } else {
+        currState = targetState;
+    }
     target = states[currState];
 
 }
@@ -116,4 +112,34 @@ void lb_task_func() {
       lb_liftControl();
       pros::delay(ez::util::DELAY_TIME);
     }
+}
+void lb_task_func_AUTON() {
+    while (true)
+    {
+      lb_liftControl_AUTON();
+      pros::delay(ez::util::DELAY_TIME);
+    }
+}
+   
+bool lb_finished = false;
+void lb_liftControl_AUTON() {
+    // lbPID.target_set(target);
+    if ((target <= 50)) {
+        lb_kP = 4;
+    } else {
+        lb_kP = 2.5;
+    }
+    double currentPos = -1 * (ladyBrownSensor.get_position() / 100.00);
+    double error = target - currentPos;
+    double velocity = lb_kP * error;
+    // double velocity = lbPID.compute(currentPos);    
+   
+    // if ((error < 2) && (error > -2)) {
+    //     velocity = 0;
+    // }
+    // if (error < -360) {
+    //     velocity = 0;
+    // }
+
+    ladybrown.move(velocity);
 }

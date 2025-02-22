@@ -9,6 +9,7 @@ ez::Piston backClamp('c'); // true is down
 ez::Piston doinkerRight('a'); // true is down
 ez::Piston doinkerLeft('e'); // true is down
 
+//16 IS A BAD PORT ITS BAD
 
 pros::v5::Motor ladybrown(3, pros::v5::MotorGears::red, pros::v5::MotorEncoderUnits::degrees);
 
@@ -18,7 +19,7 @@ Rotation ladyBrownSensor(-9);
 Controller master (CONTROLLER_MASTER);
 // Drivetrain constructor
 
-IMU inertial(16);
+IMU inertial(15);
 
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing! 
@@ -32,10 +33,10 @@ ez::Drive chassis(
     // External Gear Ratio (MUST BE DECIMAL) This is WHEEL GEAR / SENSOR GEAR
     // eg. if your drive is 84:36 where the 36t is sensored, your RATIO would be 84/36 which is 2.333
     // eg. if your drive is 36:60 where the 60t is sensored, your RATIO would be 36/60 which is 0.6
-    1.66,
+    1.33,
 
-    -9,  // Left Rotation Port (negative port will reverse it!)
-    2 // Right Rotation Port (negative port will reverse it!)
+    -19,  // Left Rotation Port (negative port will reverse it!)
+    12 // Right Rotation Port (negative port will reverse it!)
 ); 
 
 

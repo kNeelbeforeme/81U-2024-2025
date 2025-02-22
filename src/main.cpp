@@ -102,7 +102,8 @@ void autonomous() {
   chassis.pid_targets_reset();                // Resets PID targets to 0
   chassis.drive_imu_reset();                  // Reset gyro position to 0
   chassis.drive_sensor_reset();               // Reset drive sensors to 0
-  chassis.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
+  chassis.drive_brake_set(MOTOR_BRAKE_HOLD);// Set motors to hold.  This helps autonomous consistency
+  pros::Task lb_control_auton_task(lb_task_func_AUTON);
 
   ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
@@ -155,8 +156,8 @@ void opcontrol() {
       chassis.pid_tuner_iterate(); // Allow PID Tuner to iterate
     } 
 
-    doinkerLeft.button_toggle(master.get_digital_new_press(DIGITAL_X));
-    doinkerRight.button_toggle(master.get_digital_new_press(DIGITAL_B));
+    doinkerLeft.button_toggle(master.get_digital_new_press(DIGITAL_LEFT));
+    doinkerRight.button_toggle(master.get_digital_new_press(DIGITAL_RIGHT));
     // intakePiston.button_toggle(master.get_digital_new_press(DIGITAL_Y));
     if (master.get_digital_new_press(DIGITAL_A)) {
       lb_nextState();
@@ -164,7 +165,7 @@ void opcontrol() {
 
     if (master.get_digital_new_press(DIGITAL_Y)) {
       //sets lb to tipping position
-      lb_setState(4);
+      lb_setState(3);
     }
 
     // if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
