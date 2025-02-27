@@ -19,7 +19,7 @@ Rotation ladyBrownSensor(-9);
 Controller master (CONTROLLER_MASTER);
 // Drivetrain constructor
 
-IMU inertial(15);
+IMU inertial(16);
 
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing! 

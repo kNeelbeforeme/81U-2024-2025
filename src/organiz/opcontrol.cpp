@@ -16,7 +16,7 @@ void intake_func() {
 
 
 const int numStates = 4;
-int states[numStates] = {0, 29, 130, 190};
+int states[numStates] = {0, 29, 160, 160};
 int currState = 0;
 int target = 0;
 
