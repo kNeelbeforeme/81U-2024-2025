@@ -16,59 +16,50 @@ void intake_func() {
 
 
 const int numStates = 4;
-int states[numStates] = {0, 29, 160, 160};
+int states[numStates] = {0, 28, 150, 160};
+
+//constants we use later
 int currState = 0;
 int target = 0;
-
-// ez::PID lbPID(5);
+double lb_kP = 2.5;
 
 const int MAX_LB_SPEED = 127;
 const int NEG_MAX_LB_SPEED = -127;
-double lb_kP = 2.5;
 
 
-void lb_liftControl() {
-    // lbPID.target_set(target);
+
+void lb_liftControl(bool enabled) {
+    if (enabled) {
+    //if the movement is smaller/ it needs to move from idle to loading, the kP is boosted
+    // meaning that it will provide more power/more exact movement
     if ((target <= 50)) {
-        lb_kP = 4;
+        lb_kP = 3;
     } else {
-        lb_kP = 2.5;
+        lb_kP = 2.8;
     }
+    //current position (reversed because of how we placed our sensor)
     double currentPos = -1 * (ladyBrownSensor.get_position() / 100.00);
+
+    //distance from our target(in degrees)
     double error = target - currentPos;
+
+    //calculates the speed it should go based on the power(kP) and distance from the target(error)
     double velocity = lb_kP * error;
-    // double velocity = lbPID.compute(currentPos);    
-   
-    // if ((error < 2) && (error > -2)) {
-    //     velocity = 0;
-    // }
-    // if (error < -360) {
-    //     velocity = 0;
-    // }
-
-    
-    // if (velocity > MAX_LB_SPEED) {
-    //     velocity = MAX_LB_SPEED;
-
-    // } else if (velocity < NEG_MAX_LB_SPEED) {
-    //     velocity = NEG_MAX_LB_SPEED;
-
-    // } else if (abs(velocity) < 2) {
-    //     velocity = 0;
-    // }
 
     ladybrown.move(velocity);
 
-
+    //These are used for debugging
     // std::cout << "Current position /100: " << currentPos << "\n";
-    // // std::cout << "Current position from lb sensor: " << ladyBrownSensor.get_position() << "\n";
-    // // std::cout << "Current error: " << error << "\n";
+    // std::cout << "Current position from lb sensor: " << ladyBrownSensor.get_position() << "\n";
+    // std::cout << "Current error: " << error << "\n";
     // std::cout << "Current velocity: " << velocity << "\n";
 
-
+    }
 }
 
+// Sets the target of the lift to either the next in the array, or to the idle position
 void lb_nextState() {
+    //Debugging messages
     std::cout << "current state :" << currState << "\n";
     std::cout << "target angle:" << target << "\n";
     std::cout << "Current angle from lb sensor: " << ladyBrownSensor.get_angle() << "\n";
@@ -79,14 +70,14 @@ void lb_nextState() {
         currState = 0;
     }
     target = states[currState];
-    std::cout << "current target :" << target << "\n";
+    std::cout << "new target :" << target << "\n";
 }
 
 
 
 /** 0 is idle, 
  * 1 is loading
- * 2 is aligning w stake
+ * 2 is aligning with stake
  * 3 is tipping position
  **/
 void lb_setState(int targetState) {
@@ -109,25 +100,39 @@ void lb_test_print() {
 void lb_task_func() {
     while (true)
     {
+        //turn off auton control
+      lb_liftControl_AUTON(false);
+      //turn on opcontrol control
       lb_liftControl();
       pros::delay(ez::util::DELAY_TIME);
     }
 }
+
 void lb_task_func_AUTON() {
     while (true)
     {
+        //turn off opcontrol control
+      lb_liftControl(false);
+      //turn on auton control
       lb_liftControl_AUTON();
       pros::delay(ez::util::DELAY_TIME);
     }
 }
    
 bool lb_finished = false;
-void lb_liftControl_AUTON() {
+void lb_liftControl_AUTON(bool enabled) {
+if (enabled) {
     // lbPID.target_set(target);
+    // if ((target <= 50)) {
+    //     lb_kP = 4;
+    // } else {
+    //     lb_kP = 3.7;
+    // }
+
     if ((target <= 50)) {
-        lb_kP = 4;
+        lb_kP = 3;
     } else {
-        lb_kP = 2.5;
+        lb_kP = 2.8;
     }
     double currentPos = -1 * (ladyBrownSensor.get_position() / 100.00);
     double error = target - currentPos;
@@ -142,4 +147,47 @@ void lb_liftControl_AUTON() {
     // }
 
     ladybrown.move(velocity);
+}
+}
+
+void lb_wait() {
+    double counter = 0;
+    bool isDone = false;
+    while (true) {
+    double currentPos = -1 * (ladyBrownSensor.get_position() / 100.00);
+    double error = target - currentPos;
+        if (abs(error) <= 2) {
+            isDone = true;
+            break;
+        }
+        pros::delay(10);
+        counter++;
+        if ((isDone == false) && (counter >= 100)) {
+            if ((abs(error) <= 5) || counter >= 400) {
+                isDone = true;
+                break;
+            }
+        }
+    }
+    
+}
+
+//degrees is how close it should be to the target before exiting
+void lb_wait_until(double degrees) {
+    double counter = 0;
+    bool isDone = false;
+    while (true) {
+    double currentPos = -1 * (ladyBrownSensor.get_position() / 100.00);
+    double error = target - currentPos;
+        if (abs(error) <= degrees) {
+            isDone = true;
+            break;
+        }
+        pros::delay(10);
+        counter++;
+        if ((isDone == false) && (counter >= 400)) {
+            isDone == true;
+            break;
+        }
+    }
 }

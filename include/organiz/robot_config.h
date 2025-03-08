@@ -1,4 +1,5 @@
 #ifndef ROBOT_CONFIG
+#define ROBOT_CONFIG
 #include "main.h"
 
 extern ez::Drive chassis;

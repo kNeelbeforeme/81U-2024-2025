@@ -11,7 +11,10 @@
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
+bool AreBlue = true;
+
 void initialize() {
+  // Initialize the LCD
 	pros::lcd::initialize();
   chassis.initialize();
   master.rumble(".");
@@ -19,6 +22,7 @@ void initialize() {
   ladyBrownSensor.reset();
   // ladyBrownSensor.set_reversed(true);
   ladyBrownSensor.reset_position();
+  ladybrown.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	// pros::lcd::register_btn1_cb([]{sunaiControls != sunaiControls});
 
 
@@ -36,24 +40,43 @@ void initialize() {
   // chassis.opcontrol_curve_buttons_left_set(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);  // If using tank, only the left side is used.
   // chassis.opcontrol_curve_buttons_right_set(pros::E_CONTROLLER_DIGITAL_Y, pros::E_CONTROLLER_DIGITAL_A);
 
+  // make team switch with center button
+  pros::Task switchTeams([]{
+    while (true) {
+      if ((pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1) {
+        AreBlue = !AreBlue;
+      }
+      if (AreBlue) {
+        pros::lcd::set_text(3, "BLUE TEAM");
+      } else {
+        pros::lcd::set_text(3, "RED TEAM");
+      }
+      pros::delay(ez::util::DELAY_TIME);
+    }
+  });
+
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
+    Auton("SKILLS CODE", skills_code),
+
     Auton("BLUE RING SIDE", blue_ring_rush),
     Auton("BLUE GOAL SIDE", blue_goal_rush),
+    Auton("BLUE DISRUPTOR", blue_disruptor),
     Auton("RED RING SIDE CODE", red_ring_rush),
     Auton("RED GOAL SIDE CODE", red_goal_rush),
-    Auton("SKILLS CODE", skills_code),
+    Auton("RED DISRUPTOR", red_disruptor),
     Auton("SIMPLE LEFT SIDE", simple_left),
     Auton("SIMPLE RIGHT SIDE", simple_right),
 
-    //   Auton("drive example", drive_example),
-    //   Auton("Example Turn\n\nTurn 3 times.", turn_example),
-    //   Auton("Drive and Turn\n\nDrive forward, turn, come back. ", drive_and_turn),
-    //   Auton("Drive and Turn\n\nSlow down during drive.", wait_until_change_speed),
-    //   Auton("Swing Example\n\nSwing in an 'S' curve", swing_example),
-    //   Auton("Motion Chaining\n\nDrive forward, turn, and come back, but blend everything together :D", motion_chaining),
-    //   Auton("Combine all 3 movements", combining_movements),
-    //   Auton("Interference\n\nAfter driving forward, robot performs differently if interfered or not.", interfered_example),
+    Auton("drive example", drive_example),
+
+      Auton("Example Turn\n\nTurn 3 times.", turn_example),
+      Auton("Drive and Turn\n\nDrive forward, turn, come back. ", drive_and_turn),
+      Auton("Drive and Turn\n\nSlow down during drive.", wait_until_change_speed),
+      Auton("Swing Example\n\nSwing in an 'S' curve", swing_example),
+      Auton("Motion Chaining\n\nDrive forward, turn, and come back, but blend everything together :D", motion_chaining),
+      Auton("Combine all 3 movements", combining_movements),
+      Auton("Interference\n\nAfter driving forward, robot performs differently if interfered or not.", interfered_example),
     Auton("DO NOTHING \n THIS CODE STAYS STILL AND DOES NOTHING", do_nothing)
 
     
@@ -106,6 +129,8 @@ void autonomous() {
   chassis.drive_sensor_reset();               // Reset drive sensors to 0
   chassis.drive_brake_set(MOTOR_BRAKE_HOLD);// Set motors to hold.  This helps autonomous consistency
   pros::Task lb_control_auton_task(lb_task_func_AUTON);
+  default_constants(); // Set the drive to your own constants from autons.cpp!
+
 
   ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }

@@ -7,6 +7,8 @@ extern Drive chassis;
 void do_nothing();
 void blue_ring_rush();
 void blue_goal_rush();
+void blue_disruptor();
+void red_disruptor();
 void red_ring_rush();
 void red_goal_rush();
 void skills_code();
